@@ -12,14 +12,14 @@ using std::vector;
 
 typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
-using Eigen::Map;
 
 typedef tuple<int, int> Dimension;
 using boost::assign::list_of;
 
 TEST(MATRIXSEQUENCE_RETURN_DIMENSIONS) {
-    vector<Dimension> dims = list_of(Dimension(1, 2))(Dimension(2, 2))(Dimension(4, 8));
-    MatrixSequence matrixSequence(dims);
+    vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2))\
+            (Dimension(4, 8));
+    MatrixSequence matrixSequence(shapes);
     CHECK_EQUAL(matrixSequence.size(), 3);
     CHECK_EQUAL(matrixSequence.data().rows(), 1*2 + 2*2 + 4*8);
     CHECK_EQUAL(matrixSequence.matrix(0).rows(), 1);
@@ -31,8 +31,8 @@ TEST(MATRIXSEQUENCE_RETURN_DIMENSIONS) {
 }
 
 TEST(MATRIXSEQUENCE_CHANGE_VALUE_BY_VECTOR) {
-    vector<Dimension> dims = list_of(Dimension(1, 2))(Dimension(2, 2));
-    MatrixSequence matrixSequence(dims);
+    vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2));
+    MatrixSequence matrixSequence(shapes);
     ArrayX normalArray(6);
     normalArray << 10, 11, 20, 21, 22, 23;
 
@@ -58,8 +58,8 @@ TEST(MATRIXSEQUENCE_CHANGE_VALUE_BY_VECTOR) {
 }
 
 TEST(MATRIXSEQUENCE_CHANGE_VALUE_BY_MATRIX) {
-    vector<Dimension> dims = list_of(Dimension(1, 2))(Dimension(2, 2));
-    MatrixSequence matrixSequence(dims);
+    vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2));
+    MatrixSequence matrixSequence(shapes);
 
     Matrix first = Matrix::Ones(1, 2);
     Matrix secund(2, 2);
@@ -86,8 +86,8 @@ TEST(MATRIXSEQUENCE_CHANGE_VALUE_BY_MATRIX) {
 }
 
 TEST(MATRIXSEQUENCE_COPY) {
-    vector<Dimension> dims = list_of(Dimension(1, 2))(Dimension(2, 2));
-    MatrixSequence matrixSequence(dims);
+    vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2));
+    MatrixSequence matrixSequence(shapes);
 
     ArrayX normalArray(6);
     normalArray << 10, 11, 20, 21, 22, 23;

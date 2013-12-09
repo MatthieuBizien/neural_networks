@@ -7,7 +7,6 @@
 
 using std::shared_ptr;
 using std::vector;
-using std::unique_ptr;
 using std::tuple;
 
 typedef Eigen::MatrixXd Matrix;
@@ -26,11 +25,11 @@ public:
     /**
      * @brief MatrixSequence
      *  Create a sequence of matrix.
-     * @param dims
+     * @param shapes
      *  The tuple of shapes of the matrix. Each matrix can have a different
      *  shape.
      */
-    MatrixSequence(vector<tuple<int, int> > dims);
+    MatrixSequence(vector<tuple<int, int> > shapes);
 
     /**
      * @brief matrix
@@ -73,10 +72,10 @@ public:
 
 private:
     /**
-     * @brief dims_
+     * @brief shapes_
      *  The shapes of the matrix.
      */
-    shared_ptr<vector<tuple<int, int>>> dims_;
+    shared_ptr<vector<tuple<int, int>>> shapes_;
 
     /**
      * @brief beginning_matrix
