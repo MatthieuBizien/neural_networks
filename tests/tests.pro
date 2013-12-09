@@ -15,5 +15,7 @@ INCLUDEPATH += ./UnitTest
 INCLUDEPATH += ../src/app
 INCLUDEPATH += ../src/libs
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    matrixsequence_test.cpp
 
+SOURCES += ../src/app/matrixsequence.cpp

@@ -7,5 +7,9 @@ CONFIG -= qt
 
 INCLUDEPATH += ../libs
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    matrixsequence.cpp
+
+HEADERS = \
+    matrixsequence.h
 
