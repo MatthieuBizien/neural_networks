@@ -70,6 +70,9 @@ public:
      */
     int size();
 
+    friend std::ostream& operator<<(std::ostream& os,
+                                    const MatrixSequence& sequence);
+
 private:
     /**
      * @brief shapes_

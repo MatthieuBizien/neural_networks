@@ -41,3 +41,22 @@ Map<Matrix> MatrixSequence::matrix(unsigned int i) {
 int MatrixSequence::size() {
     return shapes_->size();
 }
+
+std::ostream& operator<<(std::ostream &outputStream,
+                    const MatrixSequence &sequence) {
+    outputStream << "Sequence ";
+    for(unsigned int i=0; i<sequence.shapes_->size(); i++) {
+        outputStream << get<0>(sequence.shapes_->at(i)) << "x"
+                     << get<1>(sequence.shapes_->at(i));
+        if(i < sequence.shapes_->size() ) {
+            outputStream << " ";
+        }
+    }
+    for(unsigned int i=0; i<sequence.shapes_->size(); i++) {
+        // We have to use const_cast because MatrixSequence::matrix is not
+        // const, because Map<Matrix> isn't const correct.
+        auto matrix = const_cast<MatrixSequence*>(&sequence)->matrix(i);
+        outputStream << "\n" << matrix <<  "\n";
+    }
+    return outputStream;
+}

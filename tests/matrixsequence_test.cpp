@@ -30,6 +30,15 @@ TEST(MATRIXSEQUENCE_RETURN_DIMENSIONS) {
     CHECK_EQUAL(matrixSequence.matrix(2).cols(), 8);
 }
 
+TEST(MATRIXSEQUENCE_PRINT){
+    vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2))\
+            (Dimension(4, 8));
+    MatrixSequence matrixSequence(shapes);
+    std::stringstream nullStream;
+    nullStream << matrixSequence << std::endl;
+    // std::cout << matrixSequence << std::endl;
+}
+
 TEST(MATRIXSEQUENCE_CHANGE_VALUE_BY_VECTOR) {
     vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2));
     MatrixSequence matrixSequence(shapes);
