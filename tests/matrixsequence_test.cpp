@@ -4,8 +4,6 @@
 
 #include <unittest++/UnitTest++.h>
 
-#include <boost/assign/list_of.hpp>
-
 #include "matrixsequence.h"
 
 using std::vector;
@@ -14,11 +12,11 @@ typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
 
 typedef tuple<int, int> Dimension;
-using boost::assign::list_of;
 
 TEST(MATRIXSEQUENCE_RETURN_DIMENSIONS) {
-    vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2))\
-            (Dimension(4, 8));
+    static const Dimension arr[] = { Dimension(1, 2), Dimension(2, 2),\
+                                     Dimension(4, 8) };
+    vector<Dimension> shapes (arr, arr + sizeof(arr) / sizeof(arr[0]) );
     MatrixSequence matrixSequence(shapes);
     CHECK_EQUAL(matrixSequence.size(), 3);
     CHECK_EQUAL(matrixSequence.data().rows(), 1*2 + 2*2 + 4*8);
@@ -31,8 +29,9 @@ TEST(MATRIXSEQUENCE_RETURN_DIMENSIONS) {
 }
 
 TEST(MATRIXSEQUENCE_PRINT){
-    vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2))\
-            (Dimension(4, 8));
+    static const Dimension arr[] = { Dimension(1, 2), Dimension(2, 2),\
+                                     Dimension(4, 8) };
+    vector<Dimension> shapes (arr, arr + sizeof(arr) / sizeof(arr[0]) );
     MatrixSequence matrixSequence(shapes);
     std::stringstream nullStream;
     nullStream << matrixSequence << std::endl;
@@ -40,7 +39,8 @@ TEST(MATRIXSEQUENCE_PRINT){
 }
 
 TEST(MATRIXSEQUENCE_CHANGE_VALUE_BY_VECTOR) {
-    vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2));
+    static const Dimension arr[] = { Dimension(1, 2), Dimension(2, 2) };
+    vector<Dimension> shapes (arr, arr + sizeof(arr) / sizeof(arr[0]) );
     MatrixSequence matrixSequence(shapes);
     ArrayX normalArray(6);
     normalArray << 10, 11, 20, 21, 22, 23;
@@ -67,7 +67,8 @@ TEST(MATRIXSEQUENCE_CHANGE_VALUE_BY_VECTOR) {
 }
 
 TEST(MATRIXSEQUENCE_CHANGE_VALUE_BY_MATRIX) {
-    vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2));
+    static const Dimension arr[] = { Dimension(1, 2), Dimension(2, 2) };
+    vector<Dimension> shapes (arr, arr + sizeof(arr) / sizeof(arr[0]) );
     MatrixSequence matrixSequence(shapes);
 
     Matrix first = Matrix::Ones(1, 2);
@@ -95,7 +96,8 @@ TEST(MATRIXSEQUENCE_CHANGE_VALUE_BY_MATRIX) {
 }
 
 TEST(MATRIXSEQUENCE_COPY) {
-    vector<Dimension> shapes = list_of(Dimension(1, 2))(Dimension(2, 2));
+    static const Dimension arr[] = { Dimension(1, 2), Dimension(2, 2) };
+    vector<Dimension> shapes (arr, arr + sizeof(arr) / sizeof(arr[0]) );
     MatrixSequence matrixSequence(shapes);
 
     ArrayX normalArray(6);
