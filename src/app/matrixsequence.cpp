@@ -12,6 +12,7 @@ using Eigen::Map;
 
 #include "matrixsequence.h"
 
+
 MatrixSequence::MatrixSequence(vector<tuple<int, int> > shapes) {
     shapes_.reset(new vector<tuple<int, int>>(shapes.size()));
     beginning_matrix.reset(new vector<int>(shapes_->size() +1));
@@ -25,22 +26,30 @@ MatrixSequence::MatrixSequence(vector<tuple<int, int> > shapes) {
     data_.resize(beginning_matrix->back());
 }
 
+
 Map<ArrayX> MatrixSequence::data() {
-    Map<ArrayX> out(&data_[0], data_.size());
-    return out;
+    return Map<ArrayX>(&data_[0], data_.size());
 }
+
+const Map<const ArrayX> MatrixSequence::data() const {
+    return Map<const ArrayX>(&data_[0], data_.size());
+}
+
 
 Map<Matrix> MatrixSequence::matrix(unsigned int i) {
     assert(i <= shapes_->size());
     auto* beginning = &data_.at(beginning_matrix->at(i));
     auto& shape = shapes_->at(i);
-    Map<Matrix> out(beginning, get<0>(shape), get<1>(shape));
-    return out;
+    return Map<Matrix>(beginning, get<0>(shape), get<1>(shape));
 }
 
-int MatrixSequence::size() {
-    return shapes_->size();
+const Map<const Matrix> MatrixSequence::matrix(unsigned int i) const {
+    assert(i <= shapes_->size());
+    auto* beginning = &data_.at(beginning_matrix->at(i));
+    auto& shape = shapes_->at(i);
+    return Map<const Matrix>(beginning, get<0>(shape), get<1>(shape));
 }
+
 
 std::ostream& operator<<(std::ostream &outputStream,
                     const MatrixSequence &sequence) {
@@ -53,10 +62,7 @@ std::ostream& operator<<(std::ostream &outputStream,
         }
     }
     for(unsigned int i=0; i<sequence.shapes_->size(); i++) {
-        // We have to use const_cast because MatrixSequence::matrix is not
-        // const, because Map<Matrix> isn't const correct.
-        auto matrix = const_cast<MatrixSequence*>(&sequence)->matrix(i);
-        outputStream << "\n" << matrix <<  "\n";
+        outputStream << "\n" << sequence.matrix(i) << "\n";
     }
     return outputStream;
 }

@@ -47,6 +47,7 @@ public:
      *      IN A MATRIX FOR ASSIGNEMENT !
      */
     Map<Matrix> matrix(unsigned int i);
+    const Map<const Matrix> matrix(unsigned int i) const;
 
     /**
      * @brief data
@@ -62,13 +63,31 @@ public:
      *      IN AN ARRAY FOR ASSIGNEMENT !
      */
     Map<ArrayX> data();
+    const Map<const ArrayX> data() const;
 
     /**
      * @brief getNbrMatrix
      *  Get the number of elements in the sequence.
      * @return
      */
-    int size();
+    unsigned int size() {
+        return shapes_->size();
+    }
+    unsigned int size() const {
+        return shapes_->size();
+    }
+
+    /**
+     * @brief last
+     *  Get the last matrix of the sequence.
+     * @return
+     */
+    Map<Matrix> last() {
+        return matrix(size() -1);
+    }
+    const Map<const Matrix> last() const {
+        return matrix(size() -1);
+    }
 
     friend std::ostream& operator<<(std::ostream& os,
                                     const MatrixSequence& sequence);
