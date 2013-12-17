@@ -8,8 +8,11 @@ CONFIG -= qt
 INCLUDEPATH += ../libs
 
 SOURCES += main.cpp \
-    matrixsequence.cpp
+    matrixsequence.cpp \
+    multilayerperceptron.cpp
 
 HEADERS = \
-    matrixsequence.h
+    matrixsequence.h \
+    dimensionalexception.h \
+    multilayerperceptron.h
 
