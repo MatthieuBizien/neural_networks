@@ -17,7 +17,8 @@ INCLUDEPATH += ../src/libs
 
 SOURCES += main.cpp \
     matrixsequence_test.cpp \
-    multilayerperceptron_test.cpp
+    multilayerperceptron_test.cpp \
+    gradientdescent_test.cpp
 
 SOURCES += ../src/app/matrixsequence.cpp \
     ../src/app/multilayerperceptron.cpp

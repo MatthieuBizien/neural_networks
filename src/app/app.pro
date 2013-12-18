@@ -14,5 +14,7 @@ SOURCES += main.cpp \
 HEADERS = \
     matrixsequence.h \
     dimensionalexception.h \
-    multilayerperceptron.h
+    minimizeur.h \
+    multilayerperceptron.h \
+    gradientdescent.h
 
