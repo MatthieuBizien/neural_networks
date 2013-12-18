@@ -9,6 +9,8 @@ using std::get;
 typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
 using Eigen::Map;
+using Eigen::Dynamic;
+using MapMatrix=Map<Eigen::Matrix<double, Dynamic, Dynamic, Eigen::ColMajor>>;
 
 #include "matrixsequence.h"
 
@@ -36,11 +38,11 @@ const Map<const ArrayX> MatrixSequence::data() const {
 }
 
 
-Map<Matrix> MatrixSequence::matrix(unsigned int i) {
+MapMatrix MatrixSequence::matrix(unsigned int i) {
     assert(i <= shapes_->size());
     auto* beginning = &data_.at(beginning_matrix->at(i));
     auto& shape = shapes_->at(i);
-    return Map<Matrix>(beginning, get<0>(shape), get<1>(shape));
+    return MapMatrix(beginning, get<0>(shape), get<1>(shape));
 }
 
 const Map<const Matrix> MatrixSequence::matrix(unsigned int i) const {

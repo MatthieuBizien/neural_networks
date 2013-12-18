@@ -12,6 +12,9 @@ using std::tuple;
 typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
 using Eigen::Map;
+using Eigen::Dynamic;
+using Eigen::Dynamic;
+using MapMatrix=Map<Eigen::Matrix<double, Dynamic, Dynamic, Eigen::ColMajor>>;
 
 /**
  * @brief The MatrixSequence class
@@ -43,10 +46,10 @@ public:
      *      assignement.
      *  WARNING: if you want to assign some data to the matrix, you either have
      *      to directly do obj.matrix() = somematrix, or to store obj.matrix()
-     *      in a Map<Matrix> object or to use auto. DO NOT STORE obj.matrix()
+     *      in a MapMatrix object or to use auto. DO NOT STORE obj.matrix()
      *      IN A MATRIX FOR ASSIGNEMENT !
      */
-    Map<Matrix> matrix(unsigned int i);
+    MapMatrix matrix(unsigned int i);
     const Map<const Matrix> matrix(unsigned int i) const;
 
     /**
@@ -82,7 +85,7 @@ public:
      *  Get the last matrix of the sequence.
      * @return
      */
-    Map<Matrix> last() {
+    MapMatrix last() {
         return matrix(size() -1);
     }
     const Map<const Matrix> last() const {
