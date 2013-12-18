@@ -31,6 +31,7 @@ public:
 
 private:
     float doIteration_() {
+		// Basic gradient descent. 
         auto error_gradient = perceptron_.computeGradient(X_, Y_);
         ArrayX& gradient = get<1>(error_gradient);
         perceptron_.getWeights().data() -= gradient * learningRate_;
