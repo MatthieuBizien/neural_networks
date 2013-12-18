@@ -14,7 +14,7 @@ typedef Eigen::ArrayXd ArrayX;
 using Eigen::Map;
 using Eigen::Dynamic;
 using Eigen::Dynamic;
-using MapMatrix=Map<Eigen::Matrix<double, Dynamic, Dynamic, Eigen::ColMajor>>;
+using MapMatrix=Map<Eigen::Matrix<double, Dynamic, Dynamic, Eigen::RowMajor>>;
 
 /**
  * @brief The MatrixSequence class
