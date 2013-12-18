@@ -15,4 +15,3 @@ HEADERS = \
     matrixsequence.h \
     dimensionalexception.h \
     multilayerperceptron.h
-

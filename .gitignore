@@ -30,3 +30,5 @@ Makefile
 *.sln.docstates
 neuralnetwork
 tests/tests
+gmon.out
+doc
