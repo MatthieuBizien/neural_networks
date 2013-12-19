@@ -17,4 +17,3 @@ HEADERS = \
     minimizeur.h \
     multilayerperceptron.h \
     gradientdescent.h
-
