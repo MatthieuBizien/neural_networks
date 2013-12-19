@@ -16,7 +16,8 @@ typedef Eigen::ArrayXd ArrayX;
 
 class GradientDescent: public AbstractMinimizeur {
 public:
-    GradientDescent(const Matrix& X, const Matrix& Y, const vector<int>& dimensions,
+    GradientDescent(const Matrix& X, const Matrix& Y,
+                    const vector<int>& dimensions,
                     float learningRate)
         :perceptron_(dimensions)
     {
@@ -29,8 +30,8 @@ public:
         return perceptron_.computeError(Xval, Yval);
     }
 
-private:
-    float doIteration_() {
+protected:
+    virtual float doIteration_() {
         auto error_gradient = perceptron_.computeGradient(X_, Y_);
         ArrayX& gradient = get<1>(error_gradient);
         perceptron_.getWeights().data() -= gradient * learningRate_;

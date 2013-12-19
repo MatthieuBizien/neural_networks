@@ -16,4 +16,5 @@ HEADERS = \
     dimensionalexception.h \
     minimizeur.h \
     multilayerperceptron.h \
-    gradientdescent.h
+    gradientdescent.h \
+    rprop.h

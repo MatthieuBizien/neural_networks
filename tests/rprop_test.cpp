@@ -4,7 +4,7 @@
 #include <Eigen/Dense>
 #include <unittest++/UnitTest++.h>
 
-#include "gradientdescent.h"
+#include "rprop.h"
 
 using std::vector;
 using std::get;
@@ -12,7 +12,7 @@ using std::get;
 typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
 
-TEST(GRADIENT_DESCENT_XOR) {
+TEST(ADAPTATIVE_GRADIENT_DESCENT_XOR) {
     srand(1664);
     const unsigned int n=20;
     Matrix X(n, 2), Y(n, 1);
@@ -32,7 +32,7 @@ TEST(GRADIENT_DESCENT_XOR) {
 
     const int arr[] = {int(X.cols()), 4, int(Y.cols())};
     vector<int> dimensions (arr, arr + sizeof(arr) / sizeof(arr[0]) );
-    GradientDescent estimateur(X, Y, dimensions, 10);
+    Rprop estimateur(X, Y, dimensions, 10);
     for(int i=0; i<100; i++) {
         estimateur.doIteration();
     }
@@ -40,7 +40,8 @@ TEST(GRADIENT_DESCENT_XOR) {
     CHECK_CLOSE(0, estimateur.computeError(Xval, Yval), 5e-2);
 }
 
-TEST(GRADIENT_DESCENT_XOR3) {
+
+TEST(ADAPTATIVE_GRADIENT_DESCENT_XOR3) {
     srand(1665);
     const unsigned int n=8, m=50;
     Matrix X(n, 3), Y(n, 1);
@@ -62,13 +63,14 @@ TEST(GRADIENT_DESCENT_XOR3) {
         Yval.row(i) << (n1 ^ n2 ^ n3);
     }
 
-    const int arr[] = {int(X.cols()), 4, int(Y.cols())};
+    const int arr[] = {int(X.cols()), 3, int(Y.cols())};
     vector<int> dimensions (arr, arr + sizeof(arr) / sizeof(arr[0]) );
-    GradientDescent estimateur(X, Y, dimensions, 3);
-    for(int i=0; i<600; i++) {
+    Rprop estimateur(X, Y, dimensions, 10);
+    for(int i=0; i<700; i++) {
         estimateur.doIteration();
     }
 
     CHECK_CLOSE(0, estimateur.getErrors().back(), 5e-2);
     CHECK_CLOSE(0, estimateur.computeError(Xval, Yval), 5e-2);
 }
+
