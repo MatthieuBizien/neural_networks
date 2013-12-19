@@ -13,6 +13,10 @@ using std::get;
 class AbstractMinimizeur
 {
 public:
+    /**
+    /* @brief doIteration
+    /*  Compute a new iteration of the minimizeur and update the weights.
+    **/
     void doIteration() {
         float error = doIteration_();
         errors_.push_back(error);
@@ -23,10 +27,17 @@ public:
         }
     }
 
+	/**
+	* @brief getErrors
+	*  Return the history of the errors of the network on the training set.
+	*/
     const std::vector<float> getErrors() const {
         return errors_;
     }
 
+	/**
+	* Compute the error using the final network.
+	*/
     virtual float computeError(const Matrix& X, const Matrix& Y) const
             = 0;
 
@@ -40,6 +51,11 @@ public:
 
 
 protected:
+	/**
+	* @brief doIteration_
+	*  Do an iteration of your optimizeur procedure and return the error.
+	*  Override it for your own iterative procedure.
+	*/
     virtual float doIteration_() = 0;
     std::shared_ptr<tuple<Matrix, Matrix>> validationSet_;
 
