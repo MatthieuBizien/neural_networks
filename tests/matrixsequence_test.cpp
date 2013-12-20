@@ -4,7 +4,7 @@
 
 #include <unittest++/UnitTest++.h>
 
-#include "matrixsequence.h"
+#include "utils/matrixsequence.h"
 
 using std::vector;
 

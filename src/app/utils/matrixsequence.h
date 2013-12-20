@@ -8,6 +8,7 @@
 using std::shared_ptr;
 using std::vector;
 using std::tuple;
+using std::get;
 
 typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
@@ -29,7 +30,18 @@ public:
      *  The tuple of shapes of the matrix. Each matrix can have a different
      *  shape.
      */
-    MatrixSequence(vector<tuple<int, int> > shapes);
+    MatrixSequence(vector<tuple<int, int> > shapes) {
+        shapes_.reset(new vector<tuple<int, int>>(shapes.size()));
+        beginning_matrix.reset(new vector<int>(shapes_->size() +1));
+        for(unsigned int i=0; i<shapes_->size(); ++i) {
+            shapes_->at(i) = shapes.at(i);
+            const tuple<int, int>& shape = shapes_->at(i);
+            beginning_matrix->at(i+1) = beginning_matrix->at(i) +
+                    get<0>(shape) * get<1>(shape)
+                    ;
+        }
+        data_.resize(beginning_matrix->back());
+    }
 
     /**
      * @brief matrix
@@ -46,8 +58,18 @@ public:
      *      in a Map<Matrix> object or to use auto. DO NOT STORE obj.matrix()
      *      IN A MATRIX FOR ASSIGNEMENT !
      */
-    Map<Matrix> matrix(unsigned int i);
-    const Map<const Matrix> matrix(unsigned int i) const;
+    Map<Matrix> matrix(unsigned int i) {
+        assert(i <= shapes_->size());
+        auto* beginning = &data_.at(beginning_matrix->at(i));
+        auto& shape = shapes_->at(i);
+        return Map<Matrix>(beginning, get<0>(shape), get<1>(shape));
+    }
+    const Map<const Matrix> matrix(unsigned int i) const {
+        assert(i <= shapes_->size());
+        auto* beginning = &data_.at(beginning_matrix->at(i));
+        auto& shape = shapes_->at(i);
+        return Map<const Matrix>(beginning, get<0>(shape), get<1>(shape));
+    }
 
     /**
      * @brief data
@@ -62,8 +84,12 @@ public:
      *      in a Map<ArrayXd> object or to use auto. DO NOT STORE obj.array()
      *      IN AN ARRAY FOR ASSIGNEMENT !
      */
-    Map<ArrayX> data();
-    const Map<const ArrayX> data() const;
+    Map<ArrayX> data() {
+        return Map<ArrayX>(&data_[0], data_.size());
+    }
+    const Map<const ArrayX> data() const {
+        return Map<const ArrayX>(&data_[0], data_.size());
+    }
 
     /**
      * @brief getNbrMatrix
@@ -89,8 +115,21 @@ public:
         return matrix(size() -1);
     }
 
-    friend std::ostream& operator<<(std::ostream& os,
-                                    const MatrixSequence& sequence);
+    friend std::ostream& operator<<(std::ostream& outputStream,
+                                    const MatrixSequence& sequence) {
+        outputStream << "Sequence ";
+        for(unsigned int i=0; i<sequence.shapes_->size(); i++) {
+            outputStream << get<0>(sequence.shapes_->at(i)) << "x"
+                         << get<1>(sequence.shapes_->at(i));
+            if(i < sequence.shapes_->size() ) {
+                outputStream << " ";
+            }
+        }
+        for(unsigned int i=0; i<sequence.shapes_->size(); i++) {
+            outputStream << "\n" << sequence.matrix(i) << "\n";
+        }
+        return outputStream;
+    }
 
 private:
     /**
