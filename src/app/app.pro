@@ -7,14 +7,10 @@ CONFIG -= qt
 
 INCLUDEPATH += ../libs
 
-SOURCES += main.cpp \
-    matrixsequence.cpp \
-    multilayerperceptron.cpp
+SOURCES += main.cpp
 
-HEADERS = \
-    matrixsequence.h \
-    dimensionalexception.h \
-    minimizeur.h \
-    multilayerperceptron.h \
-    gradientdescent.h \
-    rprop.h
+HEADERS += *.h \
+    utils/*.h \
+    gradientdescent/*.h \
+    neuralnets/*.h \
+    utils/math.h

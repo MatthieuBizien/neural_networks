@@ -4,8 +4,8 @@
 
 #include <unittest++/UnitTest++.h>
 
-#include "matrixsequence.h"
-#include "multilayerperceptron.h"
+#include "utils/matrixsequence.h"
+#include "neuralnets/multilayerperceptron.h"
 
 using std::vector;
 using std::get;

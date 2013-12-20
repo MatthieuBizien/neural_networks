@@ -5,8 +5,8 @@
 #include <Eigen/Dense>
 #include <memory>
 
-#include "minimizeur.h"
-#include "multilayerperceptron.h"
+#include "acostfunctionminimizeur.h"
+#include "neuralnets/multilayerperceptron.h"
 
 using std::vector;
 using std::get;
@@ -14,7 +14,7 @@ using std::get;
 typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
 
-class GradientDescent: public AbstractMinimizeur {
+class GradientDescent: public ACostFunctionMinimizeur {
 public:
     GradientDescent(const Matrix& X, const Matrix& Y,
                     const vector<int>& dimensions,

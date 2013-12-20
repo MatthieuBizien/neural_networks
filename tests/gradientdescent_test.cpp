@@ -4,7 +4,7 @@
 #include <Eigen/Dense>
 #include <unittest++/UnitTest++.h>
 
-#include "gradientdescent.h"
+#include "gradientdescent/gradientdescent.h"
 
 using std::vector;
 using std::get;

@@ -10,8 +10,7 @@ typedef Eigen::MatrixXd Matrix;
 using std::tuple;
 using std::get;
 
-class AbstractMinimizeur
-{
+class ACostFunctionMinimizeur {
 public:
     /**
      * @brief doIteration
@@ -42,7 +41,7 @@ public:
             = 0;
 
     friend std::ostream& operator<<(std::ostream& os,
-                                    const AbstractMinimizeur& sequence) {
+                                    const ACostFunctionMinimizeur& sequence) {
         for(unsigned int i=0; i<sequence.errors_.size(); i++) {
             os << i << ": " << sequence.errors_.at(i) << "\n";
         }

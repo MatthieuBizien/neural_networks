@@ -5,8 +5,8 @@
 #include <Eigen/Dense>
 #include <memory>
 
-#include "multilayerperceptron.h"
-#include "minimizeur.h"
+#include "neuralnets/multilayerperceptron.h"
+#include "acostfunctionminimizeur.h"
 
 using std::vector;
 using std::min;
@@ -21,7 +21,7 @@ typedef Eigen::ArrayXd ArrayX;
  *  See http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.21.1417 for
  *  more informations about the algorithm.
  */
-class Rprop: public AbstractMinimizeur {
+class Rprop: public ACostFunctionMinimizeur {
 public:
     Rprop(const Matrix& X, const Matrix& Y,
                               const vector<int>& dimensions,
