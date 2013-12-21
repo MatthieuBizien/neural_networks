@@ -11,4 +11,5 @@ SOURCES += main.cpp
 
 HEADERS += *.h \
     utils/*.h \
+    gradientdescent/*.h \
     neuralnets/*.h \
