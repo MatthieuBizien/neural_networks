@@ -10,4 +10,5 @@ INCLUDEPATH += ../libs
 SOURCES += main.cpp
 
 HEADERS += *.h \
-    utils/*.h
+    utils/*.h \
+    neuralnets/*.h \
