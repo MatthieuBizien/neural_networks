@@ -19,3 +19,4 @@ SOURCES += main.cpp \
     matrixsequence_test.cpp \
     multilayerperceptron_test.cpp \
     gradientdescent_test.cpp \
+    rprop_test.cpp\
