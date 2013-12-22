@@ -20,3 +20,4 @@ SOURCES += main.cpp \
     multilayerperceptron_test.cpp \
     gradientdescent_test.cpp \
     rprop_test.cpp\
+    io_test.cpp \
