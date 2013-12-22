@@ -1,6 +1,8 @@
 #ifndef MATH_H
 #define MATH_H
 
+#include <vector>
+#include "Eigen/Dense"
 
 /**
  * @brief logistic
@@ -10,7 +12,7 @@
  * @param input
  *  The original matrix.
  */
-inline Matrix logistic(const Matrix& input) {
+inline Eigen::MatrixXd logistic(const Eigen::MatrixXd& input) {
     return ((-input.array()).exp() + 1).inverse();
 }
 
@@ -23,8 +25,9 @@ inline Matrix logistic(const Matrix& input) {
  * @param input
  *  The original matrix.
  */
-inline Matrix addOneCol(const Matrix& input) {
-    Matrix next_input = Matrix::Ones(input.rows(), input.cols() +1);
+inline Eigen::MatrixXd addOneCol(const Eigen::MatrixXd& input) {
+    Eigen::MatrixXd next_input =
+            Eigen::MatrixXd::Ones(input.rows(), input.cols() +1);
     next_input.rightCols(input.cols()) = input;
     return next_input;
 }
@@ -37,14 +40,27 @@ inline Matrix addOneCol(const Matrix& input) {
  * @param dimensions_layers
  *  The sequence of dimensions of the layers of the perceptron.
  */
-inline vector<tuple<int, int>> getShapes(const vector<int>& dimensions_layers) {
-    vector<tuple<int, int>> shapes(dimensions_layers.size() -1);
+inline std::vector<std::tuple<int, int>>
+getShapes(const std::vector<int>& dimensions_layers) {
+    std::vector<std::tuple<int, int>> shapes(dimensions_layers.size() -1);
     for(unsigned int i=0; i<dimensions_layers.size() -1; i++) {
-        shapes.at(i) = tuple<int, int>(dimensions_layers.at(i+1),
-                                       dimensions_layers.at(i) +1);
+        shapes.at(i) = std::tuple<int, int>(dimensions_layers.at(i+1),
+                                            dimensions_layers.at(i) +1);
     }
     return shapes;
 }
 
+
+inline Eigen::MatrixXd getMatrixOfClasses(const Eigen::MatrixXd& Y0,
+                                          int ncol) {
+    Eigen::MatrixXd Y = Eigen::MatrixXd::Zero(Y0.rows(), ncol);
+    for (unsigned int i=0; i<Y.rows(); i++) {
+        int currentClass = int(Y0(i));
+        assert(currentClass>=0);
+        assert(currentClass<ncol);
+        Y(i, currentClass) = 1;
+    }
+    return Y;
+}
 
 #endif // MATH_H
