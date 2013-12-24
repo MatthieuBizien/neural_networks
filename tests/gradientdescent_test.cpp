@@ -5,6 +5,7 @@
 #include <unittest++/UnitTest++.h>
 
 #include "gradientdescent/gradientdescent.h"
+#include "neuralnets/multilayerperceptron.h"
 
 using std::vector;
 using std::get;
@@ -32,7 +33,8 @@ TEST(GRADIENT_DESCENT_XOR) {
 
     const int arr[] = {int(X.cols()), 4, int(Y.cols())};
     vector<int> dimensions (arr, arr + sizeof(arr) / sizeof(arr[0]) );
-    GradientDescent estimateur(X, Y, dimensions, 10);
+    GradientDescent estimateur(X, Y, std::unique_ptr<MultiLayerPerceptron>
+                               (new MultiLayerPerceptron(dimensions)), 10);
     for(int i=0; i<100; i++) {
         estimateur.doIteration();
     }
@@ -64,8 +66,9 @@ TEST(GRADIENT_DESCENT_XOR3) {
 
     const int arr[] = {int(X.cols()), 4, int(Y.cols())};
     vector<int> dimensions (arr, arr + sizeof(arr) / sizeof(arr[0]) );
-    GradientDescent estimateur(X, Y, dimensions, 3);
-    for(int i=0; i<600; i++) {
+    GradientDescent estimateur(X, Y, std::unique_ptr<MultiLayerPerceptron>
+                               (new MultiLayerPerceptron(dimensions)), 5);
+    for(int i=0; i<900; i++) {
         estimateur.doIteration();
     }
 

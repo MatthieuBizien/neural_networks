@@ -5,6 +5,8 @@
 #include <Eigen/Dense>
 #include <memory>
 
+#include "neuralnets/asupervisedlearning.h"
+
 typedef Eigen::MatrixXd Matrix;
 
 using std::tuple;
@@ -40,6 +42,15 @@ public:
     virtual float computeError(const Matrix& X, const Matrix& Y) const
             = 0;
 
+
+    float computeRightAnswers(const Matrix& X, const Matrix& Y) const {
+        ArrayX Y_ = compute(X).array();
+        auto a =  (Y.array() == compute(X).array()).select(Matrix::Zero(Y.rows(), Y.cols()), 1);
+//        return b.mean();
+    }
+
+    virtual Matrix compute(const Matrix& X) const = 0;
+
     friend std::ostream& operator<<(std::ostream& os,
                                     const ACostFunctionMinimizeur& sequence) {
         for(unsigned int i=0; i<sequence.errors_.size(); i++) {
@@ -50,7 +61,7 @@ public:
 
 
 protected:
-	/**
+    /**
      * @brief doIteration_
      *  Do an iteration of your optimizeur procedure and return the error.
      *  Override it for your own iterative procedure.

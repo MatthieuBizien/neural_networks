@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "neuralnets/multilayerperceptron.h"
+#include "neuralnets/asupervisedlearning.h"
 #include "acostfunctionminimizeur.h"
 
 using std::vector;
@@ -23,13 +24,14 @@ typedef Eigen::ArrayXd ArrayX;
  */
 class Rprop: public ACostFunctionMinimizeur {
 public:
-    Rprop(const Matrix& X, const Matrix& Y, const vector<int>& dimensions,
+    Rprop(const Matrix& X, const Matrix& Y,
+          std::unique_ptr<ASupervisedLearning> perceptron,
           float maxLearningRate, float initialLearningRate)
-        :perceptron_(dimensions)
+      :perceptron_(std::move(perceptron))
     {
         X_ = X;
         Y_ = Y;
-        const Matrix& sizeCoeffs = perceptron_.getWeights().data();
+        const Matrix& sizeCoeffs = perceptron_->getWeights().data();
         individualRates = Matrix::Constant(sizeCoeffs.rows(),
                                            sizeCoeffs.cols(),
                                            initialLearningRate);
@@ -37,15 +39,24 @@ public:
         maxLearningRate_ = maxLearningRate;
     }
 
-    float computeError(const Matrix &Xval, const Matrix &Yval) const {
-        return perceptron_.computeError(Xval, Yval);
+    Matrix compute(const Matrix& X) const {
+        return perceptron_->compute(X);
     }
+
+    float computeError(const Matrix &Xval, const Matrix &Yval) const {
+        return perceptron_->computeError(Xval, Yval);
+    }
+
+    ASupervisedLearning& getNeuralNet() {
+        return *perceptron_;
+    }
+
 
 private:
     float doIteration_() {
-        auto error_gradient = perceptron_.computeGradient(X_, Y_);
+        auto error_gradient = perceptron_->computeGradient(X_, Y_);
         ArrayX& gradient = get<1>(error_gradient);
-        perceptron_.getWeights().data() -= gradient *  individualRates;
+        perceptron_->getWeights().data() -= gradient *  individualRates;
 
         // We update the weights according to the sign of the last
         // gradients. If they are the same, we multiply by 1.2 else we
@@ -59,15 +70,16 @@ private:
             individualRates(i) *= results[1 + sign1*sign2];
             individualRates(i) = min<double>(maxLearningRate_,
                                              double(individualRates(i)));
+            individualRates(i) = max<double>(0.0001,
+                                             double(individualRates(i)));
         }
         lastGradient = gradient;
         return std::get<0>(error_gradient);
     }
 
-public:
     ArrayX lastGradient;
     ArrayX individualRates;
-    MultiLayerPerceptron perceptron_;
+    std::unique_ptr<ASupervisedLearning> perceptron_;
     Matrix X_, Y_;
     float maxLearningRate_;
 };

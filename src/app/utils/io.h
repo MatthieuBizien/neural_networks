@@ -42,8 +42,8 @@ Eigen::Matrix<T, Dynamic, Dynamic> matrix_of_csv(std::istream& input) {
 
     assert(values.size() % size_line == 0);
     int nrow = values.size() / size_line;
-    Eigen::Map<Eigen::Matrix<T, Dynamic, Dynamic>> result0(&values.at(0),
-                                                           nrow, size_line);
+    Eigen::Map<Eigen::Matrix<T, Dynamic, Dynamic, Eigen::RowMajor>>
+            result0(&values.at(0), nrow, size_line);
     // We have to do a copy
     return Eigen::Matrix<T, Dynamic, Dynamic>(result0);
 }

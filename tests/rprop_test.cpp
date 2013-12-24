@@ -32,7 +32,8 @@ TEST(ADAPTATIVE_GRADIENT_DESCENT_XOR) {
 
     const int arr[] = {int(X.cols()), 4, int(Y.cols())};
     vector<int> dimensions (arr, arr + sizeof(arr) / sizeof(arr[0]) );
-    Rprop estimateur(X, Y, dimensions, 10, 1);
+    Rprop estimateur(X, Y, std::unique_ptr<MultiLayerPerceptron>
+                     (new MultiLayerPerceptron(dimensions)), 10, 1);
     for(int i=0; i<100; i++) {
         estimateur.doIteration();
     }
@@ -65,7 +66,8 @@ TEST(ADAPTATIVE_GRADIENT_DESCENT_XOR3) {
 
     const int arr[] = {int(X.cols()), 3, int(Y.cols())};
     vector<int> dimensions (arr, arr + sizeof(arr) / sizeof(arr[0]) );
-    Rprop estimateur(X, Y, dimensions, 10, 1);
+    Rprop estimateur(X, Y, std::unique_ptr<MultiLayerPerceptron>
+                     (new MultiLayerPerceptron(dimensions)), 10, 1);
     for(int i=0; i<700; i++) {
         estimateur.doIteration();
     }

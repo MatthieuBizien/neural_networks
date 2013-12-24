@@ -5,6 +5,7 @@
 #include <Eigen/Dense>
 #include <memory>
 
+#include "asupervisedlearning.h"
 #include "utils/matrixsequence.h"
 #include "utils/dimensionalexception.h"
 #include "utils/math.h"
@@ -17,7 +18,7 @@ typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
 
 
-class MultiLayerPerceptron
+class MultiLayerPerceptron : public ASupervisedLearning
 {
 public:
     /**
@@ -47,16 +48,6 @@ public:
             coefficients_.matrix(i) = Matrix::Random(coefficient.rows(),
                                                      coefficient.cols()) * epsilon;
         }
-
-        // Initialise workingWeights.
-        workingWeights_ = std::make_shared<MatrixSequence>(coefficients_);
-        for(unsigned int i=0; i<dimensions_layers.size() -1; i++) {
-            const Matrix& coefficient = coefficients_.matrix(i);
-            workingWeights_ ->matrix(i).col(0) =
-                    Matrix::Zero(coefficient.rows(), 1);
-            workingWeights_ ->matrix(i).leftCols(coefficient.cols() -1) =
-                    Matrix::Ones(coefficient.rows(), coefficient.cols() -1);
-        }
     }
 
 
@@ -70,28 +61,6 @@ public:
      */
     Matrix compute(const Matrix& X) const  {
         return compute_output_layers(X).last();
-    }
-
-    /**
-     * @brief compute_output_layers
-     *  Compute the normalized error term of the network, compared to the expected value.
-     *
-     * @param X
-     *  The input of the network. It must have one row per observation and as
-     *  many columns as the first layer of the network.
-     * @param Y
-     *  The expected output. It must have as many rows as X and as many columns
-     *  as the last layer of the network.
-     *
-     * @return
-     *  The mean error term.
-     */
-    double computeError(const Matrix& X, const Matrix& Y) const {
-        const Matrix& result = compute(X);
-        return -1.0d/X.rows() * (
-                    Y.array() * result.array().log() +
-                    (1-Y.array()) * (1-result.array()).log()
-                    ).sum();
     }
 
 
@@ -110,7 +79,8 @@ public:
      *  The first term of the tuple is the mean error term.
      *  The secund argument is the gradient of the error term.
      */
-    tuple<double, ArrayX> computeGradient(const Matrix& X, const Matrix& Y) const {
+    virtual tuple<double, ArrayX> computeGradient(const Matrix& X,
+                                                  const Matrix& Y) const {
         if(X.rows() != Y.rows()) {
             throw DimensionalException<int>(Y.rows(), X.rows(), "rows");
         }
@@ -201,13 +171,6 @@ private:
      *  The size of each layers. It is shared because it can't be modified.
      */
     shared_ptr<vector<int>> dimensions_layers_;
-
-    /**
-     * @brief workingWeights_
-     *  The weights that are not associated to a constant neurone. It is shared
-     *  because it can't be modified.
-     */
-    shared_ptr<MatrixSequence> workingWeights_;
 
     /**
      * @brief coefficients_
