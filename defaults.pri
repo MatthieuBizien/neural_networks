@@ -3,7 +3,8 @@ INCLUDEPATH += $$TOP_PWD/src/libs
 SRC_DIR = $$TOP_PWD
 
 CONFIG += c++11
-QMAKE_CXXFLAGS += -std=c++11
+CONFIG -= qt
+QMAKE_CXXFLAGS += -std=c++0x
 
 QMAKE_CXXFLAGS_DEBUG += -pg
 QMAKE_LFLAGS_DEBUG += -pg

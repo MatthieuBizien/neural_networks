@@ -1,6 +1,7 @@
-#include <unittest++/UnitTest++.h>
+//#include <iostream>
 
 int main()
 {
-    return UnitTest::RunAllTests();
+    std::cout << "Hi, tests!" << std::endl;
+    //return UnitTest::RunAllTests();
 }

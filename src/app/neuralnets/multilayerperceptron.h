@@ -88,7 +88,7 @@ public:
      */
     double computeError(const Matrix& X, const Matrix& Y) const {
         const Matrix& result = compute(X);
-        return -1.0d/X.rows() * (
+        return -1.0/X.rows() * (
                     Y.array() * result.array().log() +
                     (1-Y.array()) * (1-result.array()).log()
                     ).sum();
@@ -118,7 +118,7 @@ public:
         MatrixSequence output_layers = compute_output_layers(X);
 
         const Matrix& result = output_layers.last();
-        double error = -1.0d/X.rows() * (
+        double error = -1.0/X.rows() * (
                     Y.array() * result.array().log() +
                     (1-Y.array()) * (1-result.array()).log()
                     ).sum();
