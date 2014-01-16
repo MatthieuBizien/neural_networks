@@ -8,7 +8,7 @@
 template <class T>
 class DimensionalException : public std::exception {
 public:
-    DimensionalException(T expected, T found, std::string dimension) {
+    DimensionalException(T expected, T found, std::string dimension) throw() {
         std::ostringstream oss;
         oss << "Expected " << expected << " " << dimension
             << ", found " << found << " " << dimension
@@ -19,6 +19,9 @@ public:
     virtual const char * what() const throw() {
         return this->msg.c_str();
     }
+
+    virtual ~DimensionalException() throw() {}
+
 
 private:
     std::string msg;

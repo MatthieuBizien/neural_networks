@@ -1,7 +1,7 @@
 
 TEMPLATE = lib
 
-HEADERS += src/*.h
+HEADERS += *.h
 
 SOURCES += \
 AssertException.cpp \

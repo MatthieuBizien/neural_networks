@@ -9,7 +9,7 @@ CONFIG   -= qt
 #QMAKE_EXTRA_TARGETS += UnitTest
 #PRE_TARGETDEPS += UnitTest
 
-#INCLUDEPATH += ./unittest++
+INCLUDEPATH += ./unittest++
 INCLUDEPATH += ../src/app
 INCLUDEPATH += ../src/libs
 
