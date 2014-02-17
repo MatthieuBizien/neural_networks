@@ -5,11 +5,22 @@ CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   -= qt
 
-#UnitTest.commands = make -C UnitTest++
-#QMAKE_EXTRA_TARGETS += UnitTest
-#PRE_TARGETDEPS += UnitTest
+win32 {
+    UnitTest.target = ./unittest/libunittest++.dll
+    POST_TARGETDEPS += ./unittest/libunittest++.dll
+}
+!win32 {
+    UnitTest.target = ./unittest/libunittest++.so
+    POST_TARGETDEPS += ./unittest/libunittest++.so
+}
 
-INCLUDEPATH += ./unittest++
+UnitTest.commands = cd unittest && qmake && make
+QMAKE_EXTRA_TARGETS += UnitTest
+
+INCLUDEPATH += ./unittest
+SOURCES += ./unittest/*.cpp
+SOURCES += ./unittest/Posix/*.cpp
+
 INCLUDEPATH += ../src/app
 INCLUDEPATH += ../src/libs
 

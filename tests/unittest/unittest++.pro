@@ -1,3 +1,10 @@
+#CONFIG += plugin
+
+CONFIG += c++11
+CONFIG -= qt
+QMAKE_CXXFLAGS += -std=c++0x
+
+QMAKE_CXXFLAGS += -Wno-sign-compare
 
 TEMPLATE = lib
 
@@ -19,5 +26,12 @@ TestReporterStdout.cpp \
 TestResults.cpp \
 TestRunner.cpp \
 TimeConstraint.cpp \
-XmlTestReporter.cpp \
+XmlTestReporter.cpp
 
+win32 {
+	SOURCES += Win32/TimeHelpers.cpp \
+}
+!win32 {
+	SOURCES += Posix/SignalTranslator.cpp \
+		   Posix/TimeHelpers.cpp
+}

@@ -2,7 +2,7 @@
 #include <Eigen/Dense>
 #include <iostream>
 
-#include <unittest++/UnitTest++.h>
+#include <UnitTest++.h>
 
 #include "utils/matrixsequence.h"
 #include "neuralnets/multilayerperceptron.h"

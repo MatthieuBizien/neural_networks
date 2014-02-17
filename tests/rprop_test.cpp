@@ -2,7 +2,7 @@
 #include <vector>
 #include <memory>
 #include <Eigen/Dense>
-#include <unittest++/UnitTest++.h>
+#include <UnitTest++.h>
 
 #include "gradientdescent/rprop.h"
 

@@ -2,7 +2,7 @@
 #include <vector>
 #include <memory>
 #include <Eigen/Dense>
-#include <unittest++/UnitTest++.h>
+#include <UnitTest++.h>
 
 #include "gradientdescent/gradientdescent.h"
 
@@ -13,7 +13,6 @@ typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
 
 TEST(GRADIENT_DESCENT_XOR) {
-    CHECK_EQUAL(0, 1);
     srand(1664);
     const unsigned int n=20;
     Matrix X(n, 2), Y(n, 1);
