@@ -31,7 +31,4 @@ XmlTestReporter.cpp
 win32 {
 	SOURCES += Win32/TimeHelpers.cpp \
 }
-!win32 {
-	SOURCES += Posix/SignalTranslator.cpp \
-		   Posix/TimeHelpers.cpp
-}
+
