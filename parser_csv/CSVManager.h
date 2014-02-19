@@ -1,8 +1,9 @@
 #include "CSVRow.h"
+#include <Eigen/Dense>
 
+using std::vector;
+using Eigen::MatrixXd;
+typedef Eigen::MatrixXd Matrix;
 
-std::vector<std::vector<double>> CreateX(int, int);
-std::vector<std::vector<int>> CreateY(int, int);
-
-std::vector<std::vector<double>> GetX(std::vector<std::vector<double>> &, int, int, int, CSVRow);
-std::vector<std::vector<int>> GetY(std::vector<std::vector<int>> &, int, int, int, CSVRow);
+Matrix getX(Matrix &, int, int, int, CSVRow);
+Matrix getY(Matrix &, int, int, int, CSVRow);
