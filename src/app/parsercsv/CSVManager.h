@@ -7,7 +7,7 @@ typedef Eigen::MatrixXd Matrix;
 
     /**
      * @brief getX and getY functions
-	 * see CSVManager.cpp for more informations
+     * see CSVManager.cpp for more information
     **/
-Matrix getX(Matrix &, int, int, int, CSVRow);
-Matrix getY(Matrix &, int, int, int, CSVRow);
+Matrix getX(Matrix &, int, int, CSVRow);
+Matrix getY(Matrix &, int, int, CSVRow);

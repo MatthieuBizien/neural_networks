@@ -19,7 +19,7 @@ int main()
 	 *  of variable of interest
 	 *  Create matrix X and Y
     **/
-    std::ifstream       file("data/wine.csv");
+    std::ifstream       file("../../data/wine.csv");
 
     CSVRow              row;
 	
@@ -34,8 +34,8 @@ int main()
 
     while(file >> row)
     {
-		getX(X,i,nrow,ncol,row);
-		getY(Y,i,nrow,nlabel,row);
+        getX(X,i,ncol,row);
+        getY(Y,i,nlabel,row);
 		i++;
 	}
     std::cout << Y <<std::endl;

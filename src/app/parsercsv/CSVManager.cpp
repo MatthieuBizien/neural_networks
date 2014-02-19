@@ -5,10 +5,10 @@
      *  We suppose that the first column in csv file is the variable of interest
      * @param
      *  The first item is the Eigen Matrix of features : MatX with 
-	 *  nrow numbers of instances, ncol numbers of features
+     *  ncol numbers of features
      *  i refers to the instance i
      **/
-Matrix getX(Matrix& MatX, int i, int nrow, int ncol, CSVRow row)
+Matrix getX(Matrix& MatX, int i, int ncol, CSVRow row)
 {	
 	for (int j=0; j<ncol; j++)
 		{
@@ -25,11 +25,11 @@ Matrix getX(Matrix& MatX, int i, int nrow, int ncol, CSVRow row)
 	 *  labels numbers have to start by 1
      * @param
      *  The first item is the Eigen Matrix of labels dummies : MatY with 
-	 *  nrow numbers of instances, nlabel numbers of labels
+     *  nlabel numbers of labels
      *  i refers to the instance i
      **/
 
-Matrix getY(Matrix & MatY, int i, int nrow, int nlabel, CSVRow row)
+Matrix getY(Matrix & MatY, int i, int nlabel, CSVRow row)
 {
 	for (int j=0; j<nlabel; j++)
 	{
