@@ -5,7 +5,7 @@ Matrix getX(Matrix& MatX, int i, int nrow, int ncol, CSVRow row)
 {	
 	for (int j=0; j<ncol; j++)
 		{
-			float a=atof(row[j+1].c_str());
+			double a=atof(row[j+1].c_str());
 			MatX(i,j)= a;
 		}
 	return MatX;

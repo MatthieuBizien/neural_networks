@@ -21,7 +21,7 @@ int main()
 
 	//Création des matrices X et Y
 	MatrixXd X(nrow,ncol);
-	MatrixXd Y(nrow,ncol);
+	MatrixXd Y(nrow,nlabel);
 
 	//std::vector<std::vector<double>> X=CreateX(nrow,ncol);
 	//std::vector<std::vector<int>> Y=CreateY(nrow,nlabel);
@@ -35,4 +35,5 @@ int main()
 		getY(Y,i,nrow,nlabel,row);
 		i++;
 	}
+	std::cout << X <<std::endl;
 }

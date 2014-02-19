@@ -1,5 +1,5 @@
 #include "CSVRow.h"
-#include <Eigen/Dense>
+#include <C:/Users/Kami/Documents/GitHub/neural_networks/src/libs/Eigen/Dense>
 
 using std::vector;
 using Eigen::MatrixXd;
