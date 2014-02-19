@@ -4,7 +4,12 @@
 #include <sstream>
 #include <vector>
 #include <string>
-//using namespace std;
+
+    /**
+     * @brief CSVRow class
+	 * for parsing csv file
+     * Create a class representing a row
+    **/
 
 class CSVRow
 {

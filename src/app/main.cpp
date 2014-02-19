@@ -1,6 +1,9 @@
 #include "CSVManager.h"
 
-//Definition de l'operateur >> et lecture ligne par ligne du fichier avec CSVRow
+    /**
+     * @brief 
+	 * Define the operator >> and read line per line a csv file with CSVRow
+    **/
 std::istream& operator>>(std::istream& str,CSVRow& data)
 {
     data.readNextRow(str);
@@ -9,24 +12,24 @@ std::istream& operator>>(std::istream& str,CSVRow& data)
 
 int main()
 {
-	//chargement du fichier
+	/**
+     * @brief 
+	 * load csv file
+	 *  parameter initialization file with ncol not containing the column 
+	 *  of variable of interest
+	 *  Create matrix X and Y
+    **/
     std::ifstream       file(".\data\wine.csv");
 
     CSVRow              row;
 	
-	//initialisation des paramètres du fichier avec ncol ne contenant pas la colonne de Y
 	int ncol=13;
 	int nrow=178;
 	int nlabel=3;
 
-	//Création des matrices X et Y
 	MatrixXd X(nrow,ncol);
 	MatrixXd Y(nrow,nlabel);
 
-	//std::vector<std::vector<double>> X=CreateX(nrow,ncol);
-	//std::vector<std::vector<int>> Y=CreateY(nrow,nlabel);
-	
-	//Remplissage des matrices X et Y
 	int i=0;
 
     while(file >> row)
