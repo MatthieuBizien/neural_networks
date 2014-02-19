@@ -19,12 +19,12 @@ int main()
 	 *  of variable of interest
 	 *  Create matrix X and Y
     **/
-    std::ifstream       file(".\data\wine.csv");
+    std::ifstream       file("data/wine.csv");
 
     CSVRow              row;
 	
 	int ncol=13;
-	int nrow=178;
+    int nrow=178;
 	int nlabel=3;
 
 	MatrixXd X(nrow,ncol);
