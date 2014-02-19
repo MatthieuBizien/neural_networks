@@ -1,4 +1,4 @@
-#include "CSVManager.h"
+#include "parsercsv/CSVManager.h"
 
     /**
      * @brief 
@@ -38,4 +38,5 @@ int main()
 		getY(Y,i,nrow,nlabel,row);
 		i++;
 	}
+    std::cout << Y <<std::endl;
 }
