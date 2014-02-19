@@ -96,6 +96,51 @@ TEST(CONSTANT_PERCEPTRON) {
 }
 
 
+TEST(SCORE_BINAIRE_XOR) {
+    static const int arr[] = {2, 2, 1};
+    vector<int> dimensions (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+    MultiLayerPerceptron perceptron(dimensions);
+    perceptron.getWeights().matrix(0) << -10,  20,  20,
+                                         -20,  15,  15;
+    perceptron.getWeights().matrix(1) << -10,  20, -20;
+
+    Matrix X(5, 2), y(5, 1);
+    X << 0, 1,
+         1, 0,
+         1, 1,
+         0, 0,
+         0, 0;
+    y << 1, 1, 0, 1, 0;
+
+    int score = perceptron.computeClassificationScoreBinary(X, y);
+    CHECK_EQUAL(4, score);
+}
+
+TEST(SCORE_MULTI_XOR) {
+    static const int arr[] = {2, 2, 2};
+    vector<int> dimensions (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+    MultiLayerPerceptron perceptron(dimensions);
+    perceptron.getWeights().matrix(0) << -10,  20,  20,
+                                         -20,  15,  15;
+    perceptron.getWeights().matrix(1) << -10,  20, -20,
+                                         10, -20, 20;
+
+    Matrix X(5, 2), y(5, 2);
+    X << 0, 1,
+         1, 0,
+         1, 1,
+         0, 0,
+         0, 0;
+    y << 1, 0,
+         1, 0,
+         0, 1,
+         1, 0,
+         0, 1;
+
+    int score = perceptron.computeClassificationScoreMulti(X, y);
+    CHECK_EQUAL(4, score);
+}
+
 /**
   Test the correctness of an hardcoded implementation of XOR against
   hard coded values.

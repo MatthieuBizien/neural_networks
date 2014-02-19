@@ -5,6 +5,7 @@
 #include <Eigen/Dense>
 #include <memory>
 
+
 #include "utils/matrixsequence.h"
 #include "utils/dimensionalexception.h"
 #include "utils/math.h"
@@ -92,6 +93,60 @@ public:
                     Y.array() * result.array().log() +
                     (1-Y.array()) * (1-result.array()).log()
                     ).sum();
+    }
+
+
+    /**
+     * @brief computeClassificationScoreBinary
+     *  Compute the number of correct predicted observations for a binary variable.
+     *
+     * @param X
+     *  The input of the network. It must have one row per observation and as
+     *  many columns as the first layer of the network.
+     * @param Y
+     *  The expected output. It must have as many rows as X and one column
+     */
+    int computeClassificationScoreBinary(const Matrix& X, const Matrix& Y) const {
+        assert(Y.cols()==1);
+        const Matrix& result = compute(X);
+        int out = X.rows();
+        for(int i=0; i<result.rows(); i++) {
+            for(int j=0; j<result.cols(); j++) {
+                if(fabs(result(i, j) - Y(i, j)) > 0.5 ) {
+                    out--;
+                    break;
+                }
+            }
+        }
+        return out;
+    }
+
+
+    /**
+     * @brief computeClassificationScoreMulti
+     *  Compute the number of correct predicted observations for a multi classes
+     *  variable.
+     *
+     * @param X
+     *  The input of the network. It must have one row per observation and as
+     *  many columns as the first layer of the network.
+     * @param Y
+     *  The expected output. It must have as many rows as X and as many columns
+     *  as the last layer of the network.
+     */
+    int computeClassificationScoreMulti(const Matrix& X, const Matrix& Y) const {
+        const Matrix& result = compute(X);
+        int out = X.rows();
+        auto maxcol = result.rowwise().maxCoeff();
+        for(int i=0; i<result.rows(); i++) {
+            for(int j=0; j<result.cols(); j++) {
+                if((result(i, j) != maxcol(i)) && (Y(i,j)==1) ) {
+                    out--;
+                    break;
+                }
+            }
+        }
+        return out;
     }
 
 
