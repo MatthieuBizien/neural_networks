@@ -30,6 +30,11 @@ public:
         return perceptron_.computeError(Xval, Yval);
     }
 
+
+    virtual MultiLayerPerceptron getPerceptron() {
+        return perceptron_;
+    }
+
 private:
     float doIteration_() {
 		// Basic gradient descent.
@@ -39,9 +44,9 @@ private:
         return get<0>(error_gradient);
     }
 
-    MultiLayerPerceptron perceptron_;
     Matrix X_, Y_;
     float learningRate_;
+    MultiLayerPerceptron perceptron_;
 };
 
 #endif // GRADIENTDESCENT_H

@@ -5,6 +5,8 @@
 #include <Eigen/Dense>
 #include <memory>
 
+#include "neuralnets/multilayerperceptron.h"
+
 typedef Eigen::MatrixXd Matrix;
 
 using std::tuple;
@@ -12,6 +14,7 @@ using std::get;
 
 class ACostFunctionMinimizeur {
 public:
+
     /**
      * @brief doIteration
      *  Compute a new iteration of the minimizeur and update the weights.
@@ -48,6 +51,8 @@ public:
         return os;
     }
 
+     virtual MultiLayerPerceptron getPerceptron() = 0;
+
 
 protected:
 	/**
@@ -61,6 +66,7 @@ protected:
 private:
     std::vector<float> errors_;
     std::vector<float> errorsValidation_;
+
 };
 
 #endif // ACOSTFUNCTIONMINIMIZEUR_H

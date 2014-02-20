@@ -41,6 +41,10 @@ public:
         return perceptron_.computeError(Xval, Yval);
     }
 
+    virtual MultiLayerPerceptron getPerceptron() {
+        return perceptron_;
+    }
+
 private:
     float doIteration_() {
         auto error_gradient = perceptron_.computeGradient(X_, Y_);
@@ -67,9 +71,10 @@ private:
 public:
     ArrayX lastGradient;
     ArrayX individualRates;
-    MultiLayerPerceptron perceptron_;
     Matrix X_, Y_;
     float maxLearningRate_;
+
+    MultiLayerPerceptron perceptron_;
 };
 
 #endif // ADAPTATIVEGRADIENTDESCENT_H
