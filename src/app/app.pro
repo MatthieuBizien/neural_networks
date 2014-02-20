@@ -7,9 +7,11 @@ CONFIG -= qt
 
 INCLUDEPATH += ../libs
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+           ./parsercsv/CSVManager.cpp \
 
 HEADERS += *.h \
     utils/*.h \
     gradientdescent/*.h \
     neuralnets/*.h \
+    parsercsv/*.h \
