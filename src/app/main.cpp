@@ -1,5 +1,7 @@
 #include "parsercsv/CSVManager.h"
 #include "gradientdescent/rprop.h"
+#include <omp.h>
+#include <stdio.h>
 using namespace std;
     /**
      * @brief 
@@ -20,14 +22,25 @@ int main()
 	 *  of variable of interest
 	 *  Create matrix X and Y
     **/
-    std::ifstream       file("G:/data/wineAppr.csv");
-    CSVRow              row;
-	
-	int ncol=13;
-    int nrow=148;
-    int nrowtest=30;
-	int nlabel=3;
 
+    int ncol=784;
+    std::cout << "Entrez le nombre de colonnes dans X" << std::endl;
+    cin >> ncol;
+    int nrow=5000;
+    std::cout << "Entrez le nombre de lignes dans X train" << std::endl;
+    cin >> nrow;
+    int nrowtest=5000;
+    std::cout << "Entrez le nombre de lignes dans X test" << std::endl;
+    cin >> nrowtest;
+    int nlabel=10;
+    std::cout << "Entrez le nombre de modalites dans Y" << std::endl;
+    cin>> nlabel;
+
+    char cheminTrain[1000];
+    std::cout << "Entrez le chemin physique du fichier d'apprentissage entre double quote" << std::endl;
+    cin >> cheminTrain;
+    std::ifstream       file(cheminTrain);
+    CSVRow              row;
 	MatrixXd X(nrow,ncol);
 	MatrixXd Y(nrow,nlabel);
 
@@ -39,7 +52,11 @@ int main()
         getY(Y,i,nlabel,row);
 		i++;
 	}
-    std::ifstream       filetest("G:/data/wineTest.csv");
+
+    char cheminTest[1000];
+    std::cout << "Entrez le chemin physique du fichier de test entre double quote" << std::endl;
+    cin >> cheminTest;
+    std::ifstream       filetest(cheminTest);
 
     CSVRow              rowt;
     MatrixXd Xtest(nrowtest,ncol);
@@ -54,29 +71,79 @@ int main()
         k++;
     }
 
-    int niter = 100;
+    //double start = omp_get_wtime();
+    int niter = 1000;
+    std::cout << "Entrez le nombre d'iteration" << std::endl;
+    cin >> niter;
 
-        static const int arr[] = {13, 20, 25, 3}; // 13 variables dans X,deux couches cachées de 20 et 25 neurones, 3 dans Y
+    int nCouche=0;
+    std::cout << "Entrez le nombre de couches cachees (1 ou 2)" << std::endl;
+    cin >> nCouche;
 
+    if (nCouche==1)
+    {
+        int nNeurone=0;
+        std::cout << "Entrez le nombre de neurones" << std::endl;
+        cin >> nNeurone;
+        static const int arr[] = {ncol, nNeurone, nlabel};
         vector<int> dimensions (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+		
+		double TauxI=0;
+		std::cout << "Entrez le taux d'apprentissage initial (par ex 1)" << std::endl;
+        cin >> TauxI;
+		double TauxM=0;
+		std::cout << "Entrez le taux d'apprentissage maximal (par ex 10)" << std::endl;
+        cin >> TauxM;
 
-        Rprop estimateur(X, Y, dimensions, 10, 1);
-
-        ofstream Ofile("G:/Output/WineOutput_2C_100N.txt", ios::out | ios::trunc);  // ouverture en écriture avec effacement du fichier ouvert
+        Rprop estimateur(X, Y, dimensions, TauxM, TauxI);
 
         for(int i=0; i<niter; i++)
         {
+            std::cout << "Iteration n_" << i+1 << std::endl;
             estimateur.doIteration();
-            //std::cout << estimateur.computeError(X,Y) << "," << estimateur.getPerceptron().computeClassificationScoreMulti(X, Y) << "," << estimateur.getPerceptron().computeClassificationScoreMulti(Xtest, Ytest) << std::endl;
+            std::cout << "Erreur (E) Train:" << "\t" << estimateur.computeError(X,Y) << "\t" << "Biens classes Train:" << "\t" << estimateur.getPerceptron().computeClassificationScoreMulti(X, Y) << "\n"
+                      << "Erreur (E) Test:" << "\t" << estimateur.computeError(Xtest,Ytest) << "\t" << "Biens classes Train:" << "\t" << estimateur.getPerceptron().computeClassificationScoreMulti(Xtest, Ytest) << std::endl;
 
-                    if(Ofile)
-                    {
+         }
+      } else {
+        if (nCouche==2)
+        {
+            int nNeurone1=0;
+            int nNeurone2=0;
+            std::cout << "Entrez le nombre de neurones de la 1ere couche cachee" << std::endl;
+            cin >> nNeurone1;
+            std::cout << "Entrez le nombre de neurones de la 2eme couche cachee" << std::endl;
+            cin >> nNeurone2;
+            static const int arr[] = {ncol, nNeurone1, nNeurone2, nlabel};
+            vector<int> dimensions (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+			
+			double TauxI=0;
+			std::cout << "Entrez le taux d'apprentissage initial (par ex 1)" << std::endl;
+			cin >> TauxI;
+			double TauxM=0;
+			std::cout << "Entrez le taux d'apprentissage maximal (par ex 10)" << std::endl;
+			cin >> TauxM;
 
-                            Ofile << i+1 << "," << estimateur.computeError(X,Y) << "," << estimateur.getPerceptron().computeClassificationScoreMulti(X, Y) << "," << estimateur.computeError(Xtest,Ytest) << "," << estimateur.getPerceptron().computeClassificationScoreMulti(Xtest, Ytest) << std::endl;
-                    }
+            Rprop estimateur(X, Y, dimensions, TauxM, TauxI);
 
+            for(int i=0; i<niter; i++)
+            {
+                std::cout << "Iteration n_" << i+1 << std::endl;
+                estimateur.doIteration();
+                std::cout << "Erreur (E) Train:" << "\t" << estimateur.computeError(X,Y) << "\t" << "Biens classes Train:" << "\t" << estimateur.getPerceptron().computeClassificationScoreMulti(X, Y) << "\n"
+                          << "Erreur (E) Test:" << "\t" << estimateur.computeError(Xtest,Ytest) << "\t" << "Biens classes Train:" << "\t" << estimateur.getPerceptron().computeClassificationScoreMulti(Xtest, Ytest) << std::endl;
+
+            }
+          } else{
+            std::cout << "Attention: le nombre de couche doit valoir 1 ou 2" << std::endl;
+            }
         }
-        Ofile.close();
 
+    std::cout << "\n" << std::endl;
+    printf("MERCI D'AVOIR ESSAYE NOTRE PERCEPTRON MULTI-COUCHES !" );
+
+    system("PAUSE");
+        //double end = omp_get_wtime();
+        //std::cout << (end - start) << std::endl;
 
 }
