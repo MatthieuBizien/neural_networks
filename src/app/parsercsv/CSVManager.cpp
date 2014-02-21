@@ -35,7 +35,7 @@ Matrix getY(Matrix & MatY, int i, int nlabel, CSVRow row)
 	{
 		double a=atof(row[0].c_str());
 		
-		if (a==j+1)
+        if (a==j+1)
 		{
 			MatY(i,j)= 1;
 		} else 
