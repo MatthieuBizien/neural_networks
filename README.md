@@ -10,7 +10,7 @@ We use Eigen for linear computations and Unittest++ for unit testing. They are b
 How to use it
 -------------
 
-You need qmake and the standard building tools. The default build loads the wine data in G:/data/. The wine data can be found in the data/ directory. You can customize it by hard-coding the paths and the dimensions of your csv files in src/app/main.cpp (yeah, kind of ugly, but do the job). Then try it with
+You need qmake and the standard building tools. Try it with
 
 ```
 qmake && make && ./tests/test && ./neuralnetwork
