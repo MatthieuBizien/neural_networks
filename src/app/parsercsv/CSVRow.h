@@ -6,8 +6,8 @@
 #include <string>
 
     /**
-     * @brief CSVRow class
-	 * for parsing csv file
+     * @brief
+     * for parsing csv file
      * Create a class representing a row
     **/
 

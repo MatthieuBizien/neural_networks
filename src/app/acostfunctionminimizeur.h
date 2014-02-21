@@ -12,6 +12,10 @@ typedef Eigen::MatrixXd Matrix;
 using std::tuple;
 using std::get;
 
+/**
+   @brief
+    An abstract class for all kind of minimization of cost functions.
+    */
 class ACostFunctionMinimizeur {
 public:
 

@@ -18,6 +18,11 @@ typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
 
 
+/**
+  * @brief
+  *    A logistic perceptron with a configurable number of layers.
+  *
+  */
 class MultiLayerPerceptron
 {
 public:
@@ -63,7 +68,7 @@ public:
 
     /**
      * @brief compute
-     *  Calculate the expected output of the network. One line must be one input.
+     *  Calculate the expected output of the network.
      *
      * @param X
      *  The input of the network. It must have one row per observation and as
@@ -75,7 +80,8 @@ public:
 
     /**
      * @brief compute_output_layers
-     *  Compute the normalized error term of the network, compared to the expected value.
+     *  Compute the normalized error term of the network, ie the inverse of
+     *  the likelihood.
      *
      * @param X
      *  The input of the network. It must have one row per observation and as
@@ -125,7 +131,7 @@ public:
     /**
      * @brief computeClassificationScoreMulti
      *  Compute the number of correct predicted observations for a multi classes
-     *  variable.
+     *  variable. It uses one versus all probabilities.
      *
      * @param X
      *  The input of the network. It must have one row per observation and as
@@ -151,8 +157,9 @@ public:
 
 
     /**
-     * @brief getGradient
-     *  Compute the normalized error term and the gradient of the network, compared to the expected value.
+     * @brief computeGradient
+     *  Compute the error term and the gradient of the network,
+     *  compared to the expected value.
      *
      * @param X
      *  The input of the network. It must have one row per observation and as
@@ -203,8 +210,9 @@ public:
     /**
      * @brief getWeights
      *  Give the current weights used by the network.
+     *
      * @return
-     *  A reference to the weights. Can't live longer than the weights themselves.
+     *  A reference to the weights.
      */
     MatrixSequence& getWeights() {
         return coefficients_;
@@ -261,6 +269,7 @@ private:
      * @brief workingWeights_
      *  The weights that are not associated to a constant neurone. It is shared
      *  because it can't be modified.
+     *  Currently not used.
      */
     shared_ptr<MatrixSequence> workingWeights_;
 

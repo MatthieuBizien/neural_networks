@@ -15,7 +15,7 @@ typedef Eigen::ArrayXd ArrayX;
 using Eigen::Map;
 
 /**
- * @brief The MatrixSequence class
+ * @brief
  *  This class allows you to manage a sequence of hetegoreneous matrix, and to
  *  switch from the matrix view to the array view, where the array is a flatten
  *  version of the sequence.
@@ -74,7 +74,8 @@ public:
     /**
      * @brief data
      *  Get a reference to the flatten version of the sequence. This operation
-     *  doesn't construct a new array.
+     *  doesn't construct a new array, so you can modify the object by
+     *  modifying the Map<ArrayX>.
      * @return
      *  A reference to the array.
      *  WARNING: it is your responsability to check the shape is right for an

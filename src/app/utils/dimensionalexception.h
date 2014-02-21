@@ -5,6 +5,10 @@
 #include <sstream>
 #include <exception>
 
+/**
+  @brief
+    An exception throwed when the dimensions of the objects are not compatible.
+    */
 template <class T>
 class DimensionalException : public std::exception {
 public:

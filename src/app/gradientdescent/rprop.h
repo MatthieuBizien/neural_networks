@@ -16,13 +16,31 @@ typedef Eigen::MatrixXd Matrix;
 typedef Eigen::ArrayXd ArrayX;
 
 /**
- * @brief The RProp class
+ * @brief
  *  Use the RProp algorithm for gradient descent.
  *  See http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.21.1417 for
  *  more informations about the algorithm.
  */
 class Rprop: public ACostFunctionMinimizeur {
 public:
+    /**
+     * @brief Rprop
+     *  Use the RProp algorithm for gradient descent.
+     * @param X
+     *  The input of the network. It must have one row per observation and as
+     *  many columns as the first layer of the network.
+     * @param Y
+     *  The expected output. It must have as many rows as X and as many columns
+     *  as the last layer of the network.
+     * @param dimensions
+     *   The dimensions of the perceptron. The first item is the size of the
+     *   input, the last one the size of the output.
+     *  @param maxLearningRate
+     *   The maximum learning rate of the descent of the individual weiths'
+     *   gradient.
+     *  @param initialLearningRate
+     *   The initial learning rate of the descent.
+      */
     Rprop(const Matrix& X, const Matrix& Y, const vector<int>& dimensions,
           float maxLearningRate, float initialLearningRate)
         :perceptron_(dimensions)
@@ -69,9 +87,20 @@ private:
     }
 
 public:
+    /** @brief X_
+      The input of the stored data.
+      */
+    Matrix X_;
+    /** @brief Y_
+      The output of the stored data.
+      */
+    Matrix Y_;
+
+    /** @brief lastGradient
+      The gradient of the last iteration. Used for sign comparison.
+      */
     ArrayX lastGradient;
     ArrayX individualRates;
-    Matrix X_, Y_;
     float maxLearningRate_;
 
     MultiLayerPerceptron perceptron_;
