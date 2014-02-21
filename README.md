@@ -16,3 +16,4 @@ You need qmake and the standard building tools. The default build loads the wine
 qmake && make && ./tests/test && ./neuralnetwork
 ```
 
+The documentation can be generated using Doxygen.
