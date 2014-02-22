@@ -5,6 +5,8 @@ This implementation is done for learning purposes. It is our first C++ project, 
 
 The focus for this project was to have a tested code. Most of the classes are tested by the 20 differents tests. We are pretty confident that the code works. It can run on Linux and on Windows, although the tests compile only under Linux.
 
+A report, in French, of this project, is also included in this directory. It also contains the Doxygen documentation at the end.
+
 We use Eigen for linear computations and Unittest++ for unit testing. They are both included in the repository.
 
 How to use it
